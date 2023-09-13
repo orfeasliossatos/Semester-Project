@@ -1,0 +1,37 @@
+## Weeks -1,0: Perform initial experiments to check claims made by paper.
+1. September 7th
+	+ Define initial goals, note down major dates
+2. September 14th
+	+ Verify experiments performed in paper
+
+## Weeks 1-16: Picking apart mathematics, measuring sample complexity, making conjectures.
+3. September 21st
+	+ Perform experiment to measure sample complexity gap between CNN and FCNN
+4. September 28th
+	+ (???)
+5. October 5th
+6. October 12th
+7. October 19th
+8. October 26th
+9. November 2nd
+10. November 9th
+11. November 16th
+12. November 23th
+13. November 30th
+14. December 7th
+15. December 14th
+16. December 21st
+	+ Finish experiments and theory. Start writing
+
+## Weeks 17-21: Write and submit report.
+
+17. December 28th
+	+ Finish draft report. 
+	+ Send project to people for proof-reading.
+18. January 5th 
+	+ Submit final report to lab.
+19. January 11th
+	+ Finish draft presentation.
+	+ Present in front of people for practice.
+21. Latest January 25th
+	+ Give presentation to lab.
