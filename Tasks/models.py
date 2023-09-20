@@ -8,8 +8,8 @@ class CNN(nn.Module):
         
         self.conv = nn.Conv2d(3, 10, kernel_size=3, stride=1, padding=1)
         self.activation = activation
-        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.fc = nn.Linear(160, 1)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.sigmoid = nn.Sigmoid()
         
         
@@ -18,6 +18,7 @@ class CNN(nn.Module):
         x = self.activation(x)
         x = self.pool(x)
         x = x.view(x.size(0), -1)
+        self.fc = nn.Linear(x.size(1), 1)
         x = self.fc(x)
         x = self.sigmoid(x)
         return x
