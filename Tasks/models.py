@@ -1,24 +1,23 @@
 import torch.nn as nn
 import torch.optim as optim
+from helpers import numel
 
 # Define CNN
 class CNN(nn.Module):
-    def __init__(self, activation):
+    def __init__(self, input_shape, activation):
         super(CNN, self).__init__()
         
         self.conv = nn.Conv2d(3, 10, kernel_size=3, stride=1, padding=1)
         self.activation = activation
-        self.fc = nn.Linear(160, 1)
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.fc = nn.Linear(numel(input_shape, [self.conv,self.pool]), 1)
         self.sigmoid = nn.Sigmoid()
-        
         
     def forward(self, x):
         x = self.conv(x)
         x = self.activation(x)
         x = self.pool(x)
         x = x.view(x.size(0), -1)
-        self.fc = nn.Linear(x.size(1), 1)
         x = self.fc(x)
         x = self.sigmoid(x)
         return x

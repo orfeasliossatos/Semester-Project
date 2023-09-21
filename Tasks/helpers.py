@@ -25,7 +25,7 @@ def roll_avg_rel_change(queue, window, new):
         nqueue = np.array(queue)
         
         # Return average of relative changes
-        return np.mean((nqueue[1:] - nqueue[:-1]) / nqueue[:-1])
+        return np.mean(abs((nqueue[1:] - nqueue[:-1]) / nqueue[:-1]))
 
 def calc_label(x, p):
     """
@@ -41,3 +41,22 @@ def calc_label(x, p):
     cumul_x = torch.sum(x**p, dim=(2,3))
     y = (cumul_x.T[0] > cumul_x.T[1]).to(torch.float32)
     return y.view(y.size(0),1)
+
+def numel(shape, transforms):
+    """
+        Returns the number of elements a tensor of the given
+        shape after a list of transforms applied in order of 
+        increasing index value.
+        
+        Parameters:
+            shape: a tuple (d1,d2,d3,...)
+            transforms: a list of tensor transforms 
+        Returns:
+            The number of elements in the transformed tensor.
+    """
+    
+    y = torch.tensor(np.random.normal(0,1,size=shape),dtype=torch.float32)
+    for t in transforms:
+        y=t(y)
+        
+    return torch.numel(y)
