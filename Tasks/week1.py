@@ -15,14 +15,14 @@ from models import CNN, FCNN, Quadratic
 # Global constants
 learning_rate = 0.01
 batch_size = 64
-max_epochs = 500
+max_epochs = 50
 window = 10 # Window size for convergence crit.
 rel_conv_crit = 0.01
 abs_conv_crit = 0.01
 
 # Input shape
 channels = 3 # RGB images
-img_size = 8 # Image size length
+img_size = 6 # Image size length
 input_shape = (channels, img_size, img_size)
 input_size = img_size * img_size * 3
 

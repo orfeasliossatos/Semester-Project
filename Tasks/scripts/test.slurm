@@ -8,16 +8,16 @@
 #SBATCH --time=00:01:00
 
 # How much memory (RAM) my job will use (min 512MB)
-#SBATCH --mem=512MB
+#SBATCH --mem=1G
 
 # How many nodes I'm going to use
 #SBATCH --nodes=1
 
 # How many cores/cpu must be reserved for my job.
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=4
 
 # The name of the queue/partition I want to use.
-#SBATCH --partition slurm-cluster
+#SBATCH --partition slurm-gpu
 
 # Name of the job
 #SBATCH --job-name=dummy-test
@@ -25,6 +25,9 @@
 # Where do the output logs go?
 #SBATCH --output=/home/oliossat/Documents/Semester-Project/Tasks/scripts/outputs/test.%J.out
 #SBATCH --error=/home/oliossat/Documents/Semester-Project/Tasks/scripts/outputs/test.%J.err
+
+# Use GPUs 
+#SBATCH --gres=gpu:1
 
 # Navigate to job location in directory
 cd ~/Documents/Semester-Project/Tasks/
@@ -35,8 +38,11 @@ echo "executed on $HOSTNAME"
 # Print the start date
 echo "execution started on $(date)"
 
-# Run the program with srun which is used to submit a job for execution in real time
-# Note: srun is blocking. You cannot write other commands until it is finished.
+# Activate test environment
+source ~/anaconda3/etc/profile.d/conda.sh
+conda activate test
+
+# Run python script (blocking)
 srun python test.py
 
 # Print end date
