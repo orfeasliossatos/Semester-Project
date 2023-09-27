@@ -1,3 +1,10 @@
+# Implementation of the experiments described in Week1-FCNNvsCNN
+
+# Optional Arguments
+# -min/max (int) The min/max order of magnitude for trainset size. Default 2/4.
+# -s (int) The number training sample sets (of exponentially increasing size). Default 5.
+# -f (str) The output .json file name (must contain an empty {}). Default test_acc.json
+
 # Imports
 import torch
 import torch.nn as nn
@@ -6,16 +13,41 @@ import numpy as np
 
 from torch.utils.data import TensorDataset, DataLoader
 from torchsummary import summary
-from json import load, dump
+from json import dump, load
+import sys
 
 # Local python scripts
-from helpers import roll_avg_rel_change, calc_label, numel
-from models import CNN, FCNN, Quadratic
+from helpers import roll_avg_rel_change, calc_label, numel, printProgressBar
+from models import CNN, DCNN, FCNN, Quadratic
+
+# Sanitize input
+args = sys.argv[1:]
+arg_pairs=zip(args[::2],args[1::2])
+valid_options = dict([('min', int), ('max', int), ('s', int), ('f', str)])
+is_valid=False
+
+try:
+if len(args) % 2 != 0:
+    print("Invalid arguments. Must be an even number of values.")
+    exit()
+
+for i, (arg, val) in enumerate(arg_pairs):
+    
+    if arg[1:] not in [valid_options.keys():
+        raise ValueError("Option unavailable:", arg) 
+    
+    elif valid_options[arg](val)
+except ValueError:
+    exit() 
+
+# Use GPU if available
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+print("Using device: ", device, "\n")
 
 # Global constants
 learning_rate = 0.01
 batch_size = 64
-max_epochs = 50
+max_epochs = 20
 window = 10 # Window size for convergence crit.
 rel_conv_crit = 0.01
 abs_conv_crit = 0.01
@@ -27,27 +59,35 @@ input_shape = (channels, img_size, img_size)
 input_size = img_size * img_size * 3
 
 # Data size
-N_tr = 10000
+min_mag = 2
+max_mag = 4
+splits = 5
+N_tr = 10**mag
 N_te = 10000
+Ns = np.vectorize(int)(np.array(np.logspace(min_mag, max_mag, splits)))
 
 # Full training and test setas
-gauss_x_tr = torch.tensor(np.random.normal(0,1,size=(N_tr,*input_shape)),dtype=torch.float32)
-gauss_x_te = torch.tensor(np.random.normal(0,1,size=(N_te,*input_shape)),dtype=torch.float32)
+gauss_x_tr = torch.tensor(np.random.normal(0,1,size=(N_tr,*input_shape)),dtype=torch.float32, device=device)
+gauss_x_te = torch.tensor(np.random.normal(0,1,size=(N_te,*input_shape)),dtype=torch.float32, device=device)
 
 # Full h1 training and test labels (Replace with p=1 for h1)
-gauss_y_tr = calc_label(gauss_x_tr, p=2)
-gauss_y_te = calc_label(gauss_x_te, p=2)
+gauss_y_tr = calc_label(gauss_x_tr, p=2).to(device)
+gauss_y_te = calc_label(gauss_x_te, p=2).to(device)
 
 # Train models on various input sizes
-for N in np.vectorize(int)(np.array(np.logspace(2, 4, 10))):
+printProgressBar(0, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
+
+for k, N in enumerate(Ns):
     
-    print(f"Training set size: {N}")
+    printProgressBar(k + 1, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
     
     # Models
-    CNNreLU, CNNquad = CNN(input_shape, nn.ReLU()), CNN(input_shape, Quadratic())
-    FCNNreLU, FCNNquad = FCNN(input_size, nn.ReLU()), FCNN(input_size, Quadratic())
-    models = [CNNreLU, CNNquad, FCNNreLU, FCNNquad]
-    names = ["2-CNN+ReLU", "2-CNN+Quad","2-FCNN+ReLU","2-FCNN+Quad"]
+    models = []
+    for arch in [CNN, DCNN, FCNN]:
+        for activation in [nn.ReLU(), Quadratic()]:
+            models += [arch(input_shape, activation).to(device)]
+            
+    names = ["CNN+ReLU", "CNN+Quad","DCNN+ReLU", "DCNN+Quad", "FCNN+ReLU","FCNN+Quad"]
     
     # Optimizers
     optimizers = [optim.SGD(model.parameters(), lr=learning_rate) for model in models]
@@ -80,7 +120,7 @@ for N in np.vectorize(int)(np.array(np.logspace(2, 4, 10))):
 
             epoch+=1
         
-        print(names[i], "finished. \tEpoch:", epoch,"\tLoss: %.2f" % loss.item(), "\tRoll: %.2f" % roll_avg)
+        # print(names[i], "finished. \tEpoch:", epoch,"\tLoss: %.2f" % loss.item(), "\tRoll: %.2f" % roll_avg)
 
     # Evaluate models
     test_loss = [0 for i in range(len(models))]

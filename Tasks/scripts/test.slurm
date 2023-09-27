@@ -41,9 +41,9 @@ echo "execution started on $(date)"
 # Activate test environment
 source ~/anaconda3/etc/profile.d/conda.sh
 conda activate test
-
+lspci
 # Run python script (blocking)
-srun python test.py
+# srun python test.py
 
 # Print end date
 echo "execution finished at $(date)"
