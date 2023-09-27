@@ -4,6 +4,7 @@
 # -min/max (int) The min/max order of magnitude for trainset size. Default 2/4.
 # -s (int) The number training sample sets (of exponentially increasing size). Default 5.
 # -f (str) The output .json file name (must contain an empty {}). Default test_acc.json
+# -e (int) The maximum number of epochs to run the programme for. Default 20.
 
 # Imports
 import torch
@@ -20,26 +21,33 @@ import sys
 from helpers import roll_avg_rel_change, calc_label, numel, printProgressBar
 from models import CNN, DCNN, FCNN, Quadratic
 
-# Sanitize input
+# Read terminal input
 args = sys.argv[1:]
 arg_pairs=zip(args[::2],args[1::2])
-valid_options = dict([('min', int), ('max', int), ('s', int), ('f', str)])
-is_valid=False
+valid_options = dict([('-min', int), ('-max', int), ('-s', int), ('-f', str), ('-e', int)])
+
+# Save options here
+option_dict = {}
+option_dict.setdefault(None)
 
 try:
-if len(args) % 2 != 0:
-    print("Invalid arguments. Must be an even number of values.")
-    exit()
+    if len(args) % 2 != 0:
+        print("Invalid arguments. Must be an even number of values.")
+        exit()
 
-for i, (arg, val) in enumerate(arg_pairs):
+    for i, (arg, val) in enumerate(arg_pairs):
     
-    if arg[1:] not in [valid_options.keys():
-        raise ValueError("Option unavailable:", arg) 
+        if arg not in valid_options.keys():
+            raise ValueError("Option unavailable:", arg) 
     
-    elif valid_options[arg](val)
+        else:
+            # Try convert to type
+            option_dict[arg]=valid_options[arg](val)
+         
 except ValueError:
-    exit() 
-
+    print(ValueError)
+    
+      
 # Use GPU if available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using device: ", device, "\n")
@@ -47,7 +55,7 @@ print("Using device: ", device, "\n")
 # Global constants
 learning_rate = 0.01
 batch_size = 64
-max_epochs = 20
+max_epochs = option_dict.get('-e') or 20
 window = 10 # Window size for convergence crit.
 rel_conv_crit = 0.01
 abs_conv_crit = 0.01
@@ -59,10 +67,10 @@ input_shape = (channels, img_size, img_size)
 input_size = img_size * img_size * 3
 
 # Data size
-min_mag = 2
-max_mag = 4
-splits = 5
-N_tr = 10**mag
+min_mag = option_dict.get('-min') or 2
+max_mag = option_dict.get('-max') or 4
+splits = option_dict.get('-s') or 5
+N_tr = 10**max_mag
 N_te = 10000
 Ns = np.vectorize(int)(np.array(np.logspace(min_mag, max_mag, splits)))
 
@@ -134,7 +142,7 @@ for k, N in enumerate(Ns):
             accuracy[i] += float(sum(torch.eq((out>0.5).to(float),gauss_y_te))/N_te)
 
     # Read the JSON file
-    file_path = 'test_acc.json'
+    file_path = option_dict.get('-f') or 'test_acc.json'
     with open(file_path, 'r') as json_file:
         test_acc = load(json_file)
 

@@ -27,7 +27,7 @@ class CNN(nn.Module):
 class DCNN(nn.Module):
     def __init__(self, input_shape, activation):
         super(DCNN, self).__init__()
-        self.conv = nn.Conv2d(3, 2, kernel_size=3, stride=1, padding=1)
+        self.conv = nn.Conv2d(3, 2, kernel_size=1, stride=1, padding=0)
         self.activation = activation
         self.pool = nn.AvgPool2d(input_shape[1])
         self.fc = nn.Linear(numel(input_shape, [self.conv,self.pool]), 1)
