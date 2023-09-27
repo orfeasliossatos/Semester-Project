@@ -3,19 +3,20 @@
 # Optional Arguments
 # -min/max (int) The min/max order of magnitude for trainset size. Default 2/4.
 # -s (int) The number training sample sets (of exponentially increasing size). Default 5.
-# -f (str) The output .json file name (must contain an empty {}). Default test_acc.json
-# -e (int) The maximum number of epochs to run the programme for. Default 20.
+# -f (str) The output .json file name (must contain an empty {}). Default week1_out.json
+# -e (int) The maximum number of epochs to run the programme for. Default 100.
+# -p (1/2) The p-norm used in the labelling function. Default 2.
+# -l (int) Image side-length. Default 8.
 
 # Imports
+import sys
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import numpy as np
-
 from torch.utils.data import TensorDataset, DataLoader
 from torchsummary import summary
 from json import dump, load
-import sys
 
 # Local python scripts
 from helpers import roll_avg_rel_change, calc_label, numel, printProgressBar
@@ -24,7 +25,7 @@ from models import CNN, DCNN, FCNN, Quadratic
 # Read terminal input
 args = sys.argv[1:]
 arg_pairs=zip(args[::2],args[1::2])
-valid_options = dict([('-min', int), ('-max', int), ('-s', int), ('-f', str), ('-e', int)])
+valid_options = dict([('-min', int), ('-max', int), ('-s', int), ('-f', str), ('-e', int), ('-p', int), ('-l', int)])
 
 # Save options here
 option_dict = {}
@@ -52,6 +53,10 @@ except ValueError:
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using device: ", device, "\n")
 
+# Seed random number generation
+torch.manual_seed(0)
+np.random.seed(0)
+
 # Global constants
 learning_rate = 0.01
 batch_size = 64
@@ -62,7 +67,7 @@ abs_conv_crit = 0.01
 
 # Input shape
 channels = 3 # RGB images
-img_size = 6 # Image size length
+img_size = option_dict.get('-l') or 8 # Image size length
 input_shape = (channels, img_size, img_size)
 input_size = img_size * img_size * 3
 
@@ -79,12 +84,14 @@ gauss_x_tr = torch.tensor(np.random.normal(0,1,size=(N_tr,*input_shape)),dtype=t
 gauss_x_te = torch.tensor(np.random.normal(0,1,size=(N_te,*input_shape)),dtype=torch.float32, device=device)
 
 # Full h1 training and test labels (Replace with p=1 for h1)
-gauss_y_tr = calc_label(gauss_x_tr, p=2).to(device)
-gauss_y_te = calc_label(gauss_x_te, p=2).to(device)
+p_norm = option_dict.get('-p') or 2
+gauss_y_tr = calc_label(gauss_x_tr, p=p_norm).to(device)
+gauss_y_te = calc_label(gauss_x_te, p=p_norm).to(device)
 
-# Train models on various input sizes
+# Print empty progress bar
 printProgressBar(0, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
 
+# Train models on various input sizes
 for k, N in enumerate(Ns):
     
     printProgressBar(k + 1, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
@@ -142,7 +149,7 @@ for k, N in enumerate(Ns):
             accuracy[i] += float(sum(torch.eq((out>0.5).to(float),gauss_y_te))/N_te)
 
     # Read the JSON file
-    file_path = option_dict.get('-f') or 'test_acc.json'
+    file_path = option_dict.get('-f') or 'week1_out.json'
     with open(file_path, 'r') as json_file:
         test_acc = load(json_file)
 

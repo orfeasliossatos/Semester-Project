@@ -22,7 +22,7 @@ source ~/anaconda3/etc/profile.d/conda.sh
 conda activate test
 
 # Run python script
-srun python week1.py -min 2 -max 5 -f test_acc.json -s 10 -e 20
+srun python week1.py -min 2 -max 6 -f test_acc.json -s 10 -e 100 -p 2 -l 16
 
 # Print end date
 echo "execution finished at $(date)"
