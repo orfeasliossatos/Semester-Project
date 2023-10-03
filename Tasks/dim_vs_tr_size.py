@@ -15,7 +15,7 @@ from models import ModelLoader
 # Read terminal input
 args = sys.argv[1:]
 arg_pairs=zip(args[::2],args[1::2])
-valid_options = dict([('-actv', str), ('-arch', str), ('-min', int), ('-max', int), ('-f', str), ('-e', int), ('-p', int), ('-acc', float), ('-del', strToBool)])
+valid_options = dict([('-actv', str), ('-arch', str), ('-min', int), ('-max', int), ('-f', str), ('-e', int), ('-p', int), ('-acc', float), ('-del', strToBool),  ('-prop', float)])
 
 # Save options here
 option_dict = {}
@@ -94,9 +94,11 @@ for i, input_size in enumerate(input_sizes):
     # Models
     architecture = option_dict.get('-arch') or "FCNN"
     activation = option_dict.get('-actv') or "ReLU"
-    model = loader.load(architecture, activation, input_shape=input_shapes[i])
+    model_options = {'input_shape': input_shapes[i], 'proportion': option_dict.get('-prop')}
+    model = loader.load(architecture, activation, model_options)
     name = architecture + "+" + activation
     summary(model, input_shapes[i])
+
 
     # Save initial model state
     torch.save(model.state_dict(), 'weights/'+name+'.pth')
