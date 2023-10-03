@@ -8,7 +8,7 @@ class CNN(nn.Module):
     def __init__(self, input_shape, activation):
         super(CNN, self).__init__()
         
-        self.conv = nn.Conv2d(3, 10, kernel_size=3, stride=1, padding=1)
+        self.conv = nn.Conv2d(3, 100, kernel_size=3, stride=1, padding=1)
         self.activation = activation
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.fc = nn.Linear(numel(input_shape, [self.conv,self.pool]), 1)
