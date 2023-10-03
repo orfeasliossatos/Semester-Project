@@ -48,7 +48,7 @@ def numel(shape, transforms):
         shape after a list of transforms applied in order of 
         increasing index value.
         
-        Parameters:
+        @params:
             shape: a tuple (d1,d2,d3,...)
             transforms: a list of tensor transforms 
         Returns:
@@ -80,3 +80,11 @@ def printProgressBar(iteration, total, prefix = '', suffix = '', decimals = 1, l
     # Print New Line on Complete
     if iteration == total: 
         print()
+
+def strToBool(string):
+    """
+    Parse a string as a boolean.
+    @params:
+        string     - Required : the string to parse (Str)
+    """
+    return True if string=="True" else False if string=="False" else False
