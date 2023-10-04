@@ -28,7 +28,7 @@ class DumbCNN(nn.Module):
     def __init__(self, activation, model_options):
         super(DumbCNN, self).__init__()
         
-        self.conv = nn.Conv2d(3, 2, kernel_size=1, stride=1, padding=0)
+        self.conv = nn.Conv2d(3, model_options.get('out_channels') or 2, kernel_size=1, stride=1, padding=0)
         self.activation = activation
         self.pool = nn.AvgPool2d(model_options.get('input_shape')[1])
         self.fc = nn.Linear(numel(model_options.get('input_shape'), [self.conv,self.pool]), 1)
@@ -71,9 +71,13 @@ class ParamFairCNN(nn.Module):
     # Reason for 5 : 3 for in_channels + 1 bias for each out_channel + 1 for linear layer
     def __init__(self, activation, model_options):
         super(ParamFairCNN, self).__init__()
+
+        # Compute number of out_channels needed to match FCNN parameter count with same input
         prop = model_options.get('proportion') or 1.0
         req_params = prop * sum(p.numel() for p in FCNN(activation, model_options).parameters())
         out_channels = int((req_params - 1) / 5)
+
+        # Define layers
         self.conv = nn.Conv2d(3, out_channels, kernel_size=1, stride=1, padding=0)
         self.activation = activation
         self.pool = nn.AvgPool2d(model_options.get('input_shape')[1])
