@@ -1,5 +1,8 @@
 import torch
 import numpy as np
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import TensorDataset, DataLoader
 
 def roll_avg_rel_change(queue, window, new):
     """
@@ -88,3 +91,51 @@ def strToBool(string):
         string     - Required : the string to parse (Str)
     """
     return True if string=="True" else False if string=="False" else False
+
+def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te):
+    """
+    Performs a training routine on a model with SGD, BCELoss, until 
+    the relative or absolute convergence criteria are met or until
+    the maximum number of epochs is reached. 
+    @params:
+        (TODO)
+    """
+    # Create dataloaders
+    dataset = TensorDataset(x_tr, y_tr)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    
+    # Optimizer and criterion
+    optimizer = optim.SGD(model.parameters(), lr=learning_rate)
+    criterion = nn.BCELoss()
+
+    # Training loop
+    model.train()
+    epoch = 0
+    converged = False
+    queue = []
+    while not converged:
+        for batch_x, batch_y in dataloader:
+            optimizer.zero_grad()
+            output = model(batch_x)
+            loss = criterion(output, batch_y)
+            loss.backward()
+            optimizer.step()
+
+            # Is it converged?
+            roll_avg = roll_avg_rel_change(queue, window, loss.item())
+            if (roll_avg and roll_avg < rel_conv_crit and loss < abs_conv_crit) or epoch == max_epochs:
+                converged = True
+                break
+
+        epoch += 1
+    
+    # Evaluate models
+    test_loss = 0
+    accuracy = 0
+    with torch.no_grad():
+        model.eval()
+        out = model(x_te)
+        test_loss += criterion(out, y_te)
+        accuracy += float(sum(torch.eq((out>0.5).to(float),y_te))/N_te)
+    
+    return test_loss, accuracy

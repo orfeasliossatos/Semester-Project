@@ -9,7 +9,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from torchsummary import summary
 
 # Local python scripts
-from helpers import roll_avg_rel_change, calc_label, printProgressBar, strToBool
+from helpers import roll_avg_rel_change, calc_label, printProgressBar, strToBool, train_model
 from models import ModelLoader
 
 # Read terminal input
@@ -99,7 +99,6 @@ for i, input_size in enumerate(input_sizes):
     name = architecture + "+" + activation
     summary(model, input_shapes[i])
 
-
     # Save initial model state
     torch.save(model.state_dict(), 'weights/'+name+'.pth')
     
@@ -115,42 +114,9 @@ for i, input_size in enumerate(input_sizes):
         # Reset model
         model.load_state_dict(torch.load('weights/'+name+'.pth'))
         
-        # Create dataloaders
-        dataset = TensorDataset(gauss_x_tr[:n_curr], gauss_y_tr[:n_curr])
-        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-        
-        # Optimizer and criterion
-        optimizer = optim.SGD(model.parameters(), lr=learning_rate)
-        criterion = nn.BCELoss()
-        
-        # Training loop
-        model.train()
-        epoch = 0
-        converged = False
-        loss_queue = [] # For rolling training loss stop criterion
-        while not converged:
-            for batch_x, batch_y in dataloader:
-                optimizer.zero_grad()
-                output = model(batch_x)
-                loss = criterion(output, batch_y)
-                loss.backward()
-                optimizer.step()
-
-                # Check for convergence
-                roll_avg = roll_avg_rel_change(loss_queue, window, loss.item())
-                if (roll_avg and roll_avg < rel_conv_crit and loss < abs_conv_crit) or epoch == max_epochs:
-                    converged = True
-                    break
-            
-            epoch += 1
-        
-        # Evaluate model
-        with torch.no_grad():
-            model.eval()
-            out = model(gauss_x_te)
-            test_loss = criterion(out, gauss_y_te)
-            accuracy = float(sum(torch.eq((out > 0.5).to(float), gauss_y_te)) / N_te)
-            found = abs(accuracy - epsilon) < tolerance
+        # Train model
+        _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:n_curr], gauss_y_tr[:n_curr], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)
+        found = abs(accuracy - epsilon) < tolerance
                 
         print("Finished training. Acc: ", accuracy, "n =", n_curr)
         

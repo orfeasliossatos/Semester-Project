@@ -20,13 +20,13 @@ from torch.utils.data import TensorDataset, DataLoader
 from torchsummary import summary
 
 # Local python scripts
-from helpers import roll_avg_rel_change, calc_label, numel, printProgressBar, strToBool
+from helpers import roll_avg_rel_change, calc_label, numel, printProgressBar, strToBool, train_model
 from models import ModelLoader
 
 # Read terminal input
 args = sys.argv[1:]
 arg_pairs=zip(args[::2],args[1::2])
-valid_options = dict([('-actv', str), ('-arch', str), ('-min', int), ('-max', int), ('-s', int), ('-f', str), ('-e', int), ('-p', int), ('-l', int), ('-del', strToBool)])
+valid_options = dict([('-actv', str), ('-arch', str), ('-min', int), ('-max', int), ('-s', int), ('-f', str), ('-e', int), ('-p', int), ('-l', int), ('-del', strToBool), ('-prop', float)])
 
 # Save options here
 option_dict = {}
@@ -106,48 +106,11 @@ for k, N in enumerate(Ns):
     # Models
     architecture = option_dict.get('-arch') or "FCNN"
     activation = option_dict.get('-actv') or "ReLU"
-    model = loader.load(architecture, activation, input_shape=input_shape)    
+    model_options = {'input_shape': input_shape, 'proportion': option_dict.get('-prop')}
+    model = loader.load(architecture, activation, model_options)
     name = architecture + "+" + activation
     
-    # Optimizers
-    optimizer = optim.SGD(model.parameters(), lr=learning_rate)
-    criterion = nn.BCELoss()
-    
-    # Create a DataLoader for dataset
-    dataset = TensorDataset(gauss_x_tr[:N], gauss_y_tr[:N])
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-
-    # Training loop
-    model.train()
-    epoch = 0
-    converged = False
-    queue = []
-    while not converged:
-        for batch_x, batch_y in dataloader:
-            optimizer.zero_grad()
-            output = model(batch_x)
-            loss = criterion(output, batch_y)
-            loss.backward()
-            optimizer.step()
-
-            # Is it converged?
-            roll_avg = roll_avg_rel_change(queue, window, loss.item())
-            if (roll_avg and roll_avg < rel_conv_crit and loss < abs_conv_crit) or epoch == max_epochs:
-                converged = True
-                break
-
-        epoch += 1
-    
-    # print(names[i], "finished. \tEpoch:", epoch,"\tLoss: %.2f" % loss.item(), "\tRoll: %.2f" % roll_avg)
-
-    # Evaluate models
-    test_loss = 0
-    accuracy = 0
-    with torch.no_grad():
-        model.eval()
-        out = model(gauss_x_te)
-        test_loss += criterion(out, gauss_y_te)
-        accuracy += float(sum(torch.eq((out>0.5).to(float),gauss_y_te))/N_te)
+    _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:N], gauss_y_tr[:N], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)
 
     # Read file contents
     with open(file_path, 'rb') as file:
