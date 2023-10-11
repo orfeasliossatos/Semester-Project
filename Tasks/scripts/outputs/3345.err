@@ -1,0 +1,6 @@
+
+EnvironmentNameNotFound: Could not find conda environment: test
+You can list all discoverable environments with `conda info --envs`.
+
+
+slurmstepd: error: *** JOB 3345 ON iscpc88.epfl.ch CANCELLED AT 2023-10-11T18:12:47 ***

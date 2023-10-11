@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/oliossat/Documents/Semester-Project/Tasks/week2.py", line 98, in <module>
+    torch.save(model.state_dict(), 'Weights/'+names[j]+'.pth')
+  File "/home/oliossat/.local/lib/python3.11/site-packages/torch/serialization.py", line 440, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oliossat/.local/lib/python3.11/site-packages/torch/serialization.py", line 315, in _open_zipfile_writer
+    return container(name_or_buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oliossat/.local/lib/python3.11/site-packages/torch/serialization.py", line 288, in __init__
+    super().__init__(torch._C.PyTorchFileWriter(str(name)))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Parent directory Weights does not exist.
+srun: error: node13.clusterbc.epfl.ch: task 0: Exited with exit code 1

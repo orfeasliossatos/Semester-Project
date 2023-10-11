@@ -1,0 +1,48 @@
+executed on iscpc88.epfl.ch
+execution started on Wed Oct 11 18:01:24 CEST 2023
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... failed with initial frozen solve. Retrying with flexible solve.
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/oliossat/anaconda3/envs/test
+
+  added / updated specs:
+    - pytorch
+    - pytorch-cuda=11.7
+
+
+The following NEW packages will be INSTALLED:
+
+  cuda-cudart        nvidia/linux-64::cuda-cudart-11.7.99-0 
+  cuda-cupti         nvidia/linux-64::cuda-cupti-11.7.101-0 
+  cuda-libraries     nvidia/linux-64::cuda-libraries-11.7.1-0 
+  cuda-nvrtc         nvidia/linux-64::cuda-nvrtc-11.7.99-0 
+  cuda-nvtx          nvidia/linux-64::cuda-nvtx-11.7.91-0 
+  cuda-runtime       nvidia/linux-64::cuda-runtime-11.7.1-0 
+  libcublas          nvidia/linux-64::libcublas-11.10.3.66-0 
+  libcufft           nvidia/linux-64::libcufft-10.7.2.124-h4fbf590_0 
+  libcufile          nvidia/linux-64::libcufile-1.7.2.10-0 
+  libcurand          nvidia/linux-64::libcurand-10.3.3.141-0 
+  libcusolver        nvidia/linux-64::libcusolver-11.4.0.1-0 
+  libcusparse        nvidia/linux-64::libcusparse-11.7.4.91-0 
+  libnpp             nvidia/linux-64::libnpp-11.7.4.75-0 
+  libnvjpeg          nvidia/linux-64::libnvjpeg-11.8.0.2-0 
+  llvm-openmp        pkgs/main/linux-64::llvm-openmp-14.0.6-h9e868ea_0 
+  pytorch-cuda       pytorch/linux-64::pytorch-cuda-11.7-h778d358_5 
+
+The following packages will be UPDATED:
+
+  pytorch            pkgs/main::pytorch-2.0.1-cpu_py311h6d~ --> pytorch::pytorch-2.1.0-py3.11_cpu_0 
+
+
+Proceed ([y]/n)? 
+
+Downloading and Extracting Packages
+
+Preparing transaction: ...working... done
+Verifying transaction: ...working... failed
+Cuda is not available
+execution finished at Wed Oct 11 18:02:02 CEST 2023

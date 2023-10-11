@@ -1,0 +1,9 @@
+executed on iscpc88.epfl.ch
+execution started on Wed Oct 11 18:30:25 CEST 2023
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+# All requested packages already installed.
+
+Cuda is not available
+execution finished at Wed Oct 11 18:30:44 CEST 2023

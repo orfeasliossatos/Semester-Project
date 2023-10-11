@@ -1,0 +1,5 @@
+/home/oliossat/Documents/Semester-Project/Tasks/helpers.py:28: RuntimeWarning: divide by zero encountered in divide
+  return np.mean(abs((nqueue[1:] - nqueue[:-1]) / nqueue[:-1]))
+slurmstepd: error: *** STEP 3151.0 ON node13.clusterbc.epfl.ch CANCELLED AT 2023-09-28T03:21:10 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 3151 ON node13.clusterbc.epfl.ch CANCELLED AT 2023-09-28T03:21:10 DUE TO TIME LIMIT ***

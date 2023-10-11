@@ -1,0 +1,2428 @@
+executed on iscpc88.epfl.ch
+execution started on Wed Oct 11 17:52:32 CEST 2023
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... failed with initial frozen solve. Retrying with flexible solve.
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/oliossat/anaconda3/envs/test
+
+  added / updated specs:
+    - pytorch
+    - pytorch-cuda=11.7
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    cuda-cudart-11.7.99        |                0         194 KB  nvidia
+    cuda-cupti-11.7.101        |                0        22.9 MB  nvidia
+    cuda-libraries-11.7.1      |                0           1 KB  nvidia
+    cuda-nvrtc-11.7.99         |                0        17.3 MB  nvidia
+    cuda-nvtx-11.7.91          |                0          57 KB  nvidia
+    cuda-runtime-11.7.1        |                0           1 KB  nvidia
+    libcublas-11.10.3.66       |                0       286.1 MB  nvidia
+    libcufft-10.7.2.124        |       h4fbf590_0        93.6 MB  nvidia
+    libcufile-1.7.2.10         |                0        1023 KB  nvidia
+    libcurand-10.3.3.141       |                0        51.6 MB  nvidia
+    libcusolver-11.4.0.1       |                0        78.7 MB  nvidia
+    libcusparse-11.7.4.91      |                0       151.1 MB  nvidia
+    libnpp-11.7.4.75           |                0       129.3 MB  nvidia
+    libnvjpeg-11.8.0.2         |                0         2.2 MB  nvidia
+    llvm-openmp-14.0.6         |       h9e868ea_0         4.4 MB
+    pytorch-2.1.0              |     py3.11_cpu_0        80.2 MB  pytorch
+    pytorch-cuda-11.7          |       h778d358_5           3 KB  pytorch
+    ------------------------------------------------------------
+                                           Total:       918.7 MB
+
+The following NEW packages will be INSTALLED:
+
+  cuda-cudart        nvidia/linux-64::cuda-cudart-11.7.99-0 
+  cuda-cupti         nvidia/linux-64::cuda-cupti-11.7.101-0 
+  cuda-libraries     nvidia/linux-64::cuda-libraries-11.7.1-0 
+  cuda-nvrtc         nvidia/linux-64::cuda-nvrtc-11.7.99-0 
+  cuda-nvtx          nvidia/linux-64::cuda-nvtx-11.7.91-0 
+  cuda-runtime       nvidia/linux-64::cuda-runtime-11.7.1-0 
+  libcublas          nvidia/linux-64::libcublas-11.10.3.66-0 
+  libcufft           nvidia/linux-64::libcufft-10.7.2.124-h4fbf590_0 
+  libcufile          nvidia/linux-64::libcufile-1.7.2.10-0 
+  libcurand          nvidia/linux-64::libcurand-10.3.3.141-0 
+  libcusolver        nvidia/linux-64::libcusolver-11.4.0.1-0 
+  libcusparse        nvidia/linux-64::libcusparse-11.7.4.91-0 
+  libnpp             nvidia/linux-64::libnpp-11.7.4.75-0 
+  libnvjpeg          nvidia/linux-64::libnvjpeg-11.8.0.2-0 
+  llvm-openmp        pkgs/main/linux-64::llvm-openmp-14.0.6-h9e868ea_0 
+  pytorch-cuda       pytorch/linux-64::pytorch-cuda-11.7-h778d358_5 
+
+The following packages will be UPDATED:
+
+  pytorch            pkgs/main::pytorch-2.0.1-cpu_py311h6d~ --> pytorch::pytorch-2.1.0-py3.11_cpu_0 
+
+
+Proceed ([y]/n)? 
+
+Downloading and Extracting Packages
+cuda-libraries-11.7. | 1 KB      |            |   0% 
+pytorch-2.1.0        | 80.2 MB   |            |   0% [A
+
+libnvjpeg-11.8.0.2   | 2.2 MB    |            |   0% [A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  |            |   0% [A[A[A
+
+
+
+cuda-cudart-11.7.99  | 194 KB    |            |   0% [A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  |            |   0% [A[A[A[A[A
+
+
+
+
+
+cuda-nvtx-11.7.91    | 57 KB     |            |   0% [A[A[A[A[A[A
+
+
+
+
+
+
+libcufile-1.7.2.10   | 1023 KB   |            |   0% [A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   |            |   0% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+llvm-openmp-14.0.6   | 4.4 MB    |            |   0% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  |            |   0% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+pytorch-cuda-11.7    | 3 KB      |            |   0% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-runtime-11.7.1  | 1 KB      |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-nvrtc-11.7.99   | 17.3 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | 1          |   1% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  |            |   1% [A[A[Acuda-libraries-11.7. | 1 KB      | ########## | 100% 
+
+libnvjpeg-11.8.0.2   | 2.2 MB    |            |   1% [A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  |            |   0% [A[A[A[A[A
+
+
+
+
+
+cuda-nvtx-11.7.91    | 57 KB     | ##8        |  28% [A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | 4          |   5% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | 4          |   5% [A[A[Acuda-libraries-11.7. | 1 KB      | ########## | 100% 
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | 1          |   1% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | 7          |   8% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | 7          |   8% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   |            |   0% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+libcufile-1.7.2.10   | 1023 KB   | 1          |   2% [A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #          |  11% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | 2          |   3% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #          |  11% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | 5          |   5% [A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | 3          |   4% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #3         |  14% [A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | 8          |   8% [A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #3         |  14% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | 5          |   5% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #6         |  17% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | #6         |  16% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | 7          |   7% [A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #1         |  12% [A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #8         |  19% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #3         |  14% [A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #8         |  19% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | 8          |   9% [A[A[A[A[A
+
+
+
+cuda-cudart-11.7.99  | 194 KB    | ########## | 100% [A[A[A[A
+
+
+
+cuda-cudart-11.7.99  | 194 KB    | ########## | 100% [A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #9         |  20% [A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ##         |  20% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ##2        |  22% [A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ##2        |  23% [A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ##2        |  22% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #          |  10% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ##4        |  24% [A[A[A
+
+
+
+
+
+
+
+
+llvm-openmp-14.0.6   | 4.4 MB    |            |   0% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+llvm-openmp-14.0.6   | 4.4 MB    |            |   1% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ##6        |  26% [A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ##6        |  27% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #1         |  12% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ##4        |  24% [A
+
+
+
+
+
+
+
+
+llvm-openmp-14.0.6   | 4.4 MB    | ####6      |  46% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ###2       |  33% [A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #3         |  13% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ##9        |  29% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ##5        |  26% [A
+
+
+
+
+
+
+
+
+llvm-openmp-14.0.6   | 4.4 MB    | ########5  |  85% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ###6       |  37% [A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #4         |  15% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ##7        |  27% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ###1       |  31% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ##8        |  29% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ###3       |  33% [A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ####       |  41% [A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #5         |  16% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ###1       |  32% [A
+
+
+
+
+
+
+libcufile-1.7.2.10   | 1023 KB   | ########## | 100% [A[A[A[A[A[A[A
+
+
+
+
+
+
+libcufile-1.7.2.10   | 1023 KB   | ########## | 100% [A[A[A[A[A[A[A
+
+libnvjpeg-11.8.0.2   | 2.2 MB    | ########## | 100% [A[A
+
+libnvjpeg-11.8.0.2   | 2.2 MB    | ########## | 100% [A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ###4       |  35% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ###4       |  35% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ####3      |  44% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  |            |   0% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #6         |  17% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ###6       |  37% [A[A[A
+
+
+
+
+
+cuda-nvtx-11.7.91    | 57 KB     | ########## | 100% [A[A[A[A[A[A
+
+
+
+
+
+cuda-nvtx-11.7.91    | 57 KB     | ########## | 100% [A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ####2      |  43% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #####1     |  52% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  |            |   1% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #8         |  19% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ###9       |  39% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ####6      |  46% [A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | 1          |   1% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #####6     |  57% [A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #9         |  20% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ####       |  41% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | 1          |   2% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ####2      |  42% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ####9      |  50% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##         |  21% [A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ######     |  61% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | 4          |   5% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ####5      |  46% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | #####5     |  56% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##1        |  22% [A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ######5    |  66% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | 5          |   6% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #######1   |  71% [A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ####7      |  48% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##2        |  23% [A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #######5   |  76% [A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ####9      |  50% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | #####9     |  59% [A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | 6          |   7% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##3        |  24% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | 7          |   8% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##4        |  24% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #####1     |  51% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ######2    |  63% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ########   |  80% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #          |  10% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #####4     |  55% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##6        |  26% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ######9    |  69% [A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ########3  |  83% [A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #####7     |  57% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | #######2   |  72% [A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #1         |  11% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##7        |  27% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #2         |  12% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ########6  |  86% [A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##8        |  28% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #######5   |  76% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #####9     |  59% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #5         |  16% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #########1 |  92% [A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ########2  |  82% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ##9        |  30% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ######2    |  62% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #7         |  17% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ######4    |  64% [A[A[A
+pytorch-2.1.0        | 80.2 MB   | ########5  |  86% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###        |  30% [A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #########5 |  95% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #8         |  18% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###        |  31% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ######5    |  66% [A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | #########7 |  97% [A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | ########8  |  89% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #######    |  70% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ##1        |  22% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###1       |  32% [A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #########4 |  94% [A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###2       |  32% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ##3        |  23% [A[A[A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #########6 |  97% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #######1   |  72% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###2       |  33% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ##4        |  24% [A[A[A[A[A[A[A[A[A[A
+pytorch-2.1.0        | 80.2 MB   | #########8 |  99% [A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #######2   |  73% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ##7        |  28% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #######7   |  77% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###4       |  35% [A[A[A[A[A
+
+
+
+
+
+
+
+
+llvm-openmp-14.0.6   | 4.4 MB    | ########## | 100% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+pytorch-cuda-11.7    | 3 KB      | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###5       |  36% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #######9   |  79% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ##9        |  30% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | 6          |   7% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###8       |  38% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ########3  |  83% [A[A[A
+
+
+
+
+
+
+
+
+
+
+pytorch-cuda-11.7    | 3 KB      | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ###3       |  33% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | 1          |   2% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ###9       |  39% [A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ########5  |  85% [A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ###4       |  35% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #          |  11% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | 2          |   3% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ###6       |  37% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #3         |  14% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ########7  |  87% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####       |  40% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #1         |  12% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####1      |  41% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #8         |  18% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ###8       |  39% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ########9  |  90% [A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #4         |  14% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ####       |  40% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #########1 |  92% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####2      |  42% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ##         |  21% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #6         |  17% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ####1      |  41% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ##3        |  23% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #########3 |  93% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####2      |  43% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ##3        |  24% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ####4      |  45% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #########7 |  97% [A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ##7        |  28% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####4      |  44% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ##7        |  28% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ###        |  31% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ####6      |  46% [A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | #########9 |  99% [A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####5      |  45% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ###        |  31% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ###2       |  33% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####5      |  46% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ####7      |  48% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ####1      |  42% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####7      |  48% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ###7       |  37% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #####      |  50% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #####1     |  52% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ###9       |  40% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ####6      |  47% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ####8      |  49% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #####4     |  55% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ####5      |  45% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####      |  50% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #####5     |  55% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ####8      |  49% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####1     |  51% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #####6     |  56% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #####9     |  59% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####2     |  53% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #####1     |  52% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ######     |  60% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ######4    |  64% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #####4     |  54% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ######1    |  61% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####3     |  54% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | #1         |  12% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ######7    |  68% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####5     |  56% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ######4    |  65% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #####8     |  58% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ######     |  61% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #######1   |  71% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####6     |  57% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ######6    |  67% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | ##3        |  23% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | ###        |  31% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #######4   |  74% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ######3    |  63% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ######8    |  69% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####7     |  58% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | #####1     |  51% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ######8    |  68% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ########   |  81% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #######2   |  72% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #####9     |  59% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | ######4    |  65% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ########4  |  84% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #######    |  71% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ########7  |  88% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #######3   |  74% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######     |  60% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | #######7   |  77% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #######4   |  74% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | #########5 |  96% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #######5   |  76% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | ########6  |  86% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######1    |  61% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #######5   |  76% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #######8   |  78% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ########1  |  81% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######2    |  62% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######2    |  63% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-runtime-11.7.1  | 1 KB      | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########   |  80% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ########4  |  84% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-nvrtc-11.7.99   | 17.3 MB   |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######4    |  65% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-nvrtc-11.7.99   | 17.3 MB   | ##8        |  29% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######5    |  66% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-nvrtc-11.7.99   | 17.3 MB   | #######5   |  75% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######6    |  67% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #########  |  90% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########1  |  82% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #########2 |  92% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######7    |  68% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########2  |  83% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ######8    |  69% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | #########3 |  94% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #######    |  70% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########7  |  87% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########8  |  89% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #######1   |  71% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #########3 |  94% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #######4   |  74% [A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | #########7 |  97% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #######5   |  76% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #######7   |  78% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #######9   |  80% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ########1  |  82% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ########3  |  84% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ########5  |  86% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | ########7  |  87% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #########  |  91% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #########4 |  94% [A[A[A[A[A
+
+
+
+
+libcublas-11.10.3.66 | 286.1 MB  | #########7 |  97% [A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ########## | 100% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+libcusolver-11.4.0.1 | 78.7 MB   | ########## | 100% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libcurand-10.3.3.141 | 51.6 MB   | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+libnpp-11.7.4.75     | 129.3 MB  | ########## | 100% [A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-runtime-11.7.1  | 1 KB      | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-nvrtc-11.7.99   | 17.3 MB   | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+cuda-cupti-11.7.101  | 22.9 MB   | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+libcufft-10.7.2.124  | 93.6 MB   | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########## | 100% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+libcusparse-11.7.4.9 | 151.1 MB  | ########## | 100% [A[A[A[A[A[A[A[A[A[A

@@ -1,0 +1,21 @@
+/home/oliossat/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:152: UserWarning: 
+    Found GPU0 Tesla K20m which is of cuda capability 3.5.
+    PyTorch no longer supports this GPU because it is too old.
+    The minimum cuda capability supported by this library is 3.7.
+    
+  warnings.warn(old_gpu_warn % (d, name, major, minor, min_arch // 10, min_arch % 10))
+Traceback (most recent call last):
+  File "/home/oliossat/Documents/Semester-Project/Tasks/tr_size_vs_te_acc.py", line 92, in <module>
+    gauss_y_tr = calc_label(gauss_x_tr, p=p_norm).to(device)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/oliossat/Documents/Semester-Project/Tasks/helpers.py", line 44, in calc_label
+    cumul_x = torch.sum(x**p, dim=(2,3))
+                        ~^^~
+  File "/home/oliossat/.local/lib/python3.11/site-packages/torch/_tensor.py", line 40, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

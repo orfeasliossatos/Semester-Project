@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/oliossat/Documents/Semester-Project/Tasks/week1.py", line 153, in <module>
+    with open(file_path, 'r') as json_file:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'test_acc.json'
+srun: error: node13.clusterbc.epfl.ch: task 0: Exited with exit code 1

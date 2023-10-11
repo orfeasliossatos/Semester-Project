@@ -10,6 +10,7 @@
 # -l (int) Image side-length. Default 8.
 
 # Imports
+import os
 import sys
 import pickle
 import numpy as np
@@ -91,11 +92,25 @@ p_norm = option_dict.get('-p') or 2
 gauss_y_tr = calc_label(gauss_x_tr, p=p_norm).to(device)
 gauss_y_te = calc_label(gauss_x_te, p=p_norm).to(device)
 
-# Option del - delete contents of results file
+# Model name
+architecture = option_dict.get('-arch') or "FCNN"
+activation = option_dict.get('-actv') or "ReLU"
+arch_name = architecture + "+" + activation
+
+# Create file if it does not exist
 file_path = option_dict.get('-f') or 'week1_out.pkl'
-if option_dict.get('-del') or False:
-    with open(file_path, 'wb+') as file:
+with open(file_path, 'ab+') as file:
+    if os.stat(file_path).st_size == 0:
         pickle.dump(dict(), file)
+
+# Option del - delete contents of results file
+if option_dict.get('-del') or False:
+    with open(file_path, 'rb+') as file:
+        test_acc = pickle.load(file)
+    
+    with open(file_path, 'wb+') as file:
+        filtered = {(name, size) : val for (name, size), val in test_acc.items() if name!=arch_name}
+        pickle.dump(filtered, file)
 
 # Print empty progress bar
 printProgressBar(0, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
@@ -103,12 +118,9 @@ printProgressBar(0, splits, prefix = 'Progress:', suffix = 'Complete', length = 
 # Train models on various input sizes
 for k, N in enumerate(Ns):
     
-    # Models
-    architecture = option_dict.get('-arch') or "FCNN"
-    activation = option_dict.get('-actv') or "ReLU"
+    # Create model
     model_options = {'input_shape': input_shape, 'proportion': option_dict.get('-prop')}
     model = loader.load(architecture, activation, model_options)
-    name = architecture + "+" + activation
     
     _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:N], gauss_y_tr[:N], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)
 
@@ -117,7 +129,7 @@ for k, N in enumerate(Ns):
         test_acc = pickle.load(file)
 
     # Add experiment to results
-    test_acc[(name, N)] = accuracy
+    test_acc[(arch_name, N)] = accuracy
 
     # Write accuracy to file
     with open(file_path, 'wb') as file:
