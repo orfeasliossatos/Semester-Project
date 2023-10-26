@@ -1,3 +1,16 @@
+# Implementation of the experiments described in Week2-TrainsetVSTestloss
+
+# Optional Arguments
+# -actv (str) The name of the activation function to use
+# -arch (str) The name of the architecture to use
+# -min/max (int) The min/max image side length.
+# -f (str) The output .json file name (must contain an empty {}). Default week2_out.pkl
+# -e (int) The maximum number of epochs to run the programme for. Default 100.
+# -p (1/2) The p-norm used in the labelling function. Default 2.
+# -acc (float) Goal accuracy for learning
+# -del (bool) Whether or not to delete the results for the given (actv, arch) pair.
+# -prop (float) If using ParamFairCNN then defines the proportionality factor.
+
 # Imports
 import sys
 import pickle
@@ -6,7 +19,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
-from torchsummary import summary
 
 # Local python scripts
 from helpers import roll_avg_rel_change, calc_label, printProgressBar, strToBool, train_model
@@ -95,9 +107,8 @@ for i, input_size in enumerate(input_sizes):
     architecture = option_dict.get('-arch') or "FCNN"
     activation = option_dict.get('-actv') or "ReLU"
     model_options = {'input_shape': input_shapes[i], 'proportion': option_dict.get('-prop')}
-    model = loader.load(architecture, activation, model_options)
+    model = loader.load(architecture, activation, model_options).to(device)
     name = architecture + "+" + activation
-    summary(model, input_shapes[i])
 
     # Save initial model state
     torch.save(model.state_dict(), 'weights/'+name+'.pth')
@@ -112,7 +123,7 @@ for i, input_size in enumerate(input_sizes):
         print("Iterate ", iterate, "Training samples: ", n_curr)
         
         # Reset model
-        model.load_state_dict(torch.load('weights/'+name+'.pth'))
+        model.load_state_dict(torch.load('weights/'+name+'.pth')).to(device)
         
         # Train model
         _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:n_curr], gauss_y_tr[:n_curr], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)

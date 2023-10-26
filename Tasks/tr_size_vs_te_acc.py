@@ -2,12 +2,15 @@
 
 # Optional Arguments
 # -actv (str) The name of the activation function to use
+# -arch (str) The name of the architecture to use
 # -min/max (int) The min/max order of magnitude for trainset size. Default 2/4.
 # -s (int) The number training sample sets (of exponentially increasing size). Default 5.
 # -f (str) The output .json file name (must contain an empty {}). Default week1_out.json
 # -e (int) The maximum number of epochs to run the programme for. Default 100.
 # -p (1/2) The p-norm used in the labelling function. Default 2.
 # -l (int) Image side-length. Default 8.
+# -del (bool) Whether or not to delete the results for the given (actv, arch) pair.
+# -prop (float) If using ParamFairCNN then defines the proportionality factor.
 
 # Imports
 import os
@@ -18,7 +21,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
-from torchsummary import summary
 
 # Local python scripts
 from helpers import roll_avg_rel_change, calc_label, numel, printProgressBar, strToBool, train_model
@@ -53,6 +55,9 @@ except ValueError:
 # Use GPU if available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using device: ", device, "\n")
+
+# Don't try to use CuDNN with Tesla GPU
+torch.backends.cudnn.enabled = False
 
 # Seed random number generation
 torch.manual_seed(0)
@@ -112,15 +117,14 @@ if option_dict.get('-del') or False:
         filtered = {(name, size) : val for (name, size), val in test_acc.items() if name!=arch_name}
         pickle.dump(filtered, file)
 
-# Print empty progress bar
-printProgressBar(0, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
+print(f"Progress: 0 / {len(Ns)}")
 
 # Train models on various input sizes
 for k, N in enumerate(Ns):
     
     # Create model
     model_options = {'input_shape': input_shape, 'proportion': option_dict.get('-prop')}
-    model = loader.load(architecture, activation, model_options)
+    model = loader.load(architecture, activation, model_options).to(device)
     
     _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:N], gauss_y_tr[:N], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)
 
@@ -136,4 +140,4 @@ for k, N in enumerate(Ns):
         pickle.dump(test_acc, file)
 
     # Print progress
-    printProgressBar(k + 1, splits, prefix = 'Progress:', suffix = 'Complete', length = 50)
+    print(f"Progress: {k+1} / {len(Ns)}")
