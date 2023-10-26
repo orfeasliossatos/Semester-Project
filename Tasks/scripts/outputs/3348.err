@@ -1,2 +1,0 @@
-/home/oliossat/anaconda3/envs/olenv/lib/python3.11/site-packages/torch/nn/modules/transformer.py:20: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /opt/conda/conda-bld/pytorch_1695391895886/work/torch/csrc/utils/tensor_numpy.cpp:84.)
-  device: torch.device = torch.device(torch._C._get_default_device()),  # torch.device('cpu'),

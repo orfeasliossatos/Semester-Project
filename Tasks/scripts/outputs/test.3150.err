@@ -1,3 +1,0 @@
-srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
-slurmstepd: error: *** STEP 3150.0 ON node13.clusterbc.epfl.ch CANCELLED AT 2023-09-28T07:17:40 DUE TO TIME LIMIT ***
-slurmstepd: error: *** JOB 3150 ON node13.clusterbc.epfl.ch CANCELLED AT 2023-09-28T07:17:40 DUE TO TIME LIMIT ***

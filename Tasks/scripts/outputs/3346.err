@@ -1,3 +1,0 @@
-/home/oliossat/anaconda3/etc/profile.d/conda.sh: line 1: 181669 Killed                  ( "$CONDA_EXE" $_CE_M $_CE_CONDA "$@" )
-/var/spool/slurm/d/job03346/slurm_script: line 34: python: command not found
-slurmstepd: error: Detected 1 oom-kill event(s) in StepId=3346.batch cgroup. Some of your processes may have been killed by the cgroup out-of-memory handler.

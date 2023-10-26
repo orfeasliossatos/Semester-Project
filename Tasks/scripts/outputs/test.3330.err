@@ -1,3 +1,0 @@
-/var/spool/slurm/d/job03330/slurm_script: line 33: import: command not found
-/var/spool/slurm/d/job03330/slurm_script: line 35: syntax error near unexpected token `exit'
-/var/spool/slurm/d/job03330/slurm_script: line 35: `exit()'
