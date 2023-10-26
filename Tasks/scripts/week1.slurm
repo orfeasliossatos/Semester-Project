@@ -2,6 +2,7 @@
 
 #SBATCH --mail-user=oiliossatos@gmail.com
 #SBATCH --time=8:00:00
+#SBATCH --mail-type=END
 #SBATCH --mem=10G
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=4
@@ -25,7 +26,7 @@ conda activate tesla
 min_mag=2
 max_mag=5
 splits=10
-max_epochs=100
+max_epochs=200
 norm=2
 width=8
 delete_results=True
