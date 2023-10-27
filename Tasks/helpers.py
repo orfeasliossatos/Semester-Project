@@ -92,7 +92,7 @@ def strToBool(string):
     """
     return True if string=="True" else False if string=="False" else False
 
-def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te):
+def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te, do_print=True):
     """
     Performs a training routine on a model with SGD, BCELoss, until 
     the relative or absolute convergence criteria are met or until
@@ -128,6 +128,8 @@ def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_co
                 break
 
         epoch += 1
+        if epoch % 10 == 0 % do_print:
+            print("Epoch:", epoch, "\tRolling Average Loss:", roll_avg, "\tLoss:", loss)
     
     # Evaluate models
     test_loss = 0
