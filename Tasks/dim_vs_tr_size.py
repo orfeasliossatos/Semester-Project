@@ -50,6 +50,9 @@ try:
 except ValueError:
     print(ValueError)
 
+# Print options
+print("Running with options", option_dict)
+
 # Seed random number generation
 torch.manual_seed(0)
 np.random.seed(0)
@@ -68,7 +71,7 @@ max_epochs = option_dict.get('-e') or 100
 window = 10 # Window size for convergence crit.
 rel_conv_crit = 0.01
 abs_conv_crit = 0.01
-epsilon = option_dict.get('-acc') or 0.7 # Required accuracy
+epsilon = option_dict.get('-acc')/100.0 or 0.7 # Required accuracy
 tolerance = 0.01 # Required tolerance
 
 # Input shape
@@ -123,7 +126,7 @@ for i, input_size in enumerate(input_sizes):
         print("Iterate ", iterate, "Training samples: ", n_curr)
         
         # Reset model
-        model.load_state_dict(torch.load('weights/'+name+'.pth')).to(device)
+        model.load_state_dict(torch.load('weights/'+name+'.pth'))
         
         # Train model
         _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:n_curr], gauss_y_tr[:n_curr], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)

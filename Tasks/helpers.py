@@ -129,7 +129,7 @@ def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_co
 
         epoch += 1
         if epoch % 10 == 0 % do_print:
-            print("Epoch:", epoch, "\tRolling Average Loss:", roll_avg, "\tLoss:", loss)
+            print("Epoch:", epoch, "\tRolling Average Loss:", roll_avg, "\tLoss:", loss.item())
     
     # Evaluate models
     test_loss = 0
