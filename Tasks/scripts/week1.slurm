@@ -34,8 +34,7 @@ filepath="results/week1/p${norm}_l${width}_e${max_epochs}.pkl"
 
 # Architectures and activation functions
 archs=(
-	"DumbCNN"
-	"FCNN"
+	"CNN"
 )
 
 actvs=(
