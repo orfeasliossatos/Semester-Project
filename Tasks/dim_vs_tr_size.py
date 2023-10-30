@@ -12,6 +12,7 @@
 # -prop (float) If using ParamFairCNN then defines the proportionality factor.
 
 # Imports
+import os
 import sys
 import pickle
 import numpy as np
@@ -64,6 +65,9 @@ loader = ModelLoader()
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print("Using device: ", device, "\n")
 
+# Don't try to use CuDNN with Tesla GPU
+torch.backends.cudnn.enabled = False
+
 # Global constants
 learning_rate = 0.01
 batch_size = 64
@@ -84,15 +88,29 @@ input_shapes = [(channels, img_size, img_size) for img_size in img_sizes]
 N_tr = 1000000
 N_te = 10000
 
+# Get architecture name
+architecture = option_dict.get('-arch') or "FCNN"
+activation = option_dict.get('-actv') or "ReLU"
+arch_name = architecture + "+" + activation
 
-# Option del - delete contents of results file
+# Create file if it doesn't exist
 file_path = option_dict.get('-f') or 'week2_out.pkl'
-if option_dict.get('-del') or False:
-    with open(file_path, 'wb+') as file:
+with open(file_path, 'ab+') as file:
+    if os.stat(file_path).st_size == 0:
         pickle.dump(dict(), file)
 
+# Option del - delete contents of results file
+if option_dict.get('-del') or False:
+    with open(file_path, 'rb+') as file:
+        results = pickle.load(file)
+
+    # Filter out results with same name
+    with open(file_path, 'wb+') as file:
+        filtered = {(name, size) : val for (name, size), val in results.items() if name!=arch_name}
+        pickle.dump(filtered, file)
+
 # Print empty progress bar
-printProgressBar(0, len(input_sizes), prefix = 'Progress:', suffix = 'Complete', length = 50)
+print(f"Progress: 0 / {len(input_sizes)}")
 
 # For increasing input dimension
 for i, input_size in enumerate(input_sizes):
@@ -107,14 +125,11 @@ for i, input_size in enumerate(input_sizes):
     gauss_y_te = calc_label(gauss_x_te, p=p_norm).to(device)
     
     # Models
-    architecture = option_dict.get('-arch') or "FCNN"
-    activation = option_dict.get('-actv') or "ReLU"
     model_options = {'input_shape': input_shapes[i], 'proportion': option_dict.get('-prop')}
     model = loader.load(architecture, activation, model_options).to(device)
-    name = architecture + "+" + activation
 
     # Save initial model state
-    torch.save(model.state_dict(), 'weights/'+name+'.pth')
+    torch.save(model.state_dict(), 'weights/'+arch_name+'.pth')
     
     # Find exact training sample set size by bisection
     found   = False
@@ -126,7 +141,7 @@ for i, input_size in enumerate(input_sizes):
         print("Iterate ", iterate, "Training samples: ", n_curr)
         
         # Reset model
-        model.load_state_dict(torch.load('weights/'+name+'.pth'))
+        model.load_state_dict(torch.load('weights/'+arch_name+'.pth'))
         
         # Train model
         _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:n_curr], gauss_y_tr[:n_curr], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)
@@ -136,6 +151,7 @@ for i, input_size in enumerate(input_sizes):
         
         # Finish if found.
         if found:
+            print(f"{arch_name} converged after {iterate} iterations (dimension={input_size}).")
             break
 
         # Bisection method for finding correct training set size
@@ -160,14 +176,14 @@ for i, input_size in enumerate(input_sizes):
     
     # Read the JSON file
     with open(file_path, 'rb') as file:
-        sample_complexity = pickle.load(file)
+        results = pickle.load(file)
 
     # Add experiment to results
-    sample_complexity[(name, input_size)] = n_curr
+    results[(arch_name, input_size)] = n_curr
 
     # Write training set size to file
     with open(file_path, 'wb') as file:
-        pickle.dump(sample_complexity, file)
+        pickle.dump(results, file)
         
     # Print progress
-    printProgressBar(i + 1, len(input_sizes), prefix = 'Progress:', suffix = 'Complete', length = 50)
+    print(f"Progress: {i+1} / {len(input_sizes)}")
