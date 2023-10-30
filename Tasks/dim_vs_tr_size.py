@@ -77,6 +77,7 @@ rel_conv_crit = 0.01
 abs_conv_crit = 0.01
 epsilon = option_dict.get('-acc')/100.0 or 0.7 # Required accuracy
 tolerance = 0.01 # Required tolerance
+proportion = option_dict.get('-prop') or None 
 
 # Input shape
 channels = 3 # RGB images
@@ -91,7 +92,7 @@ N_te = 10000
 # Get architecture name
 architecture = option_dict.get('-arch') or "FCNN"
 activation = option_dict.get('-actv') or "ReLU"
-arch_name = architecture + "+" + activation
+arch_name = architecture + "+" + activation + (str(proportion) if proportion else "" )
 
 # Create file if it doesn't exist
 file_path = option_dict.get('-f') or 'week2_out.pkl'
@@ -125,7 +126,7 @@ for i, input_size in enumerate(input_sizes):
     gauss_y_te = calc_label(gauss_x_te, p=p_norm).to(device)
     
     # Models
-    model_options = {'input_shape': input_shapes[i], 'proportion': option_dict.get('-prop')}
+    model_options = {'input_shape': input_shapes[i], 'proportion': proportion}
     model = loader.load(architecture, activation, model_options).to(device)
 
     # Save initial model state

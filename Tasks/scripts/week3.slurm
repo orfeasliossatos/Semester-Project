@@ -23,13 +23,13 @@ source ~/anaconda3/etc/profile.d/conda.sh
 conda activate tesla
 
 # Experiment variables
-min_w=4
-max_w=14
-max_epochs=100
+min_w=3
+max_w=10
+max_epochs=200
 norm=2
-accuracy=0.8
+accuracy=90
 delete_results=True
-filepath="results/week3/p${norm}_acc{accuracy}_e{max_epochs}.pkl"
+filepath="results/week3/p${norm}_acc${accuracy}_e${max_epochs}.pkl"
 
 # Run python script
 props=(
@@ -42,7 +42,7 @@ props=(
 
 
 for i in "${props[@]}"; do
-    srun python dim_vs_tr_size.py -actv "Quad" -arch "ParamFairCNN" -prop {proportion} -min $min_w -max $max_w -f $filepath -e $max_epochs -p $norm -acc $accuracy -del $delete_results
+    srun python dim_vs_tr_size.py -actv "Quad" -arch "ParamFairCNN" -prop $i -min $min_w -max $max_w -f $filepath -e $max_epochs -p $norm -acc $accuracy -del $delete_results
 done
 
 # Print end date
