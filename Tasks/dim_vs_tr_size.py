@@ -22,7 +22,7 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 
 # Local python scripts
-from helpers import roll_avg_rel_change, calc_label, printProgressBar, strToBool, train_model
+from helpers import roll_avg_rel_change, calc_label, printProgressBar, strToBool, train_model, count_parameters
 from models import ModelLoader
 
 # Read terminal input
@@ -68,6 +68,13 @@ print("Using device: ", device, "\n")
 # Don't try to use CuDNN with Tesla GPU
 torch.backends.cudnn.enabled = False
 
+# Empty cache because GPU has not a lot of memory
+torch.cuda.empty_cache()
+
+# Set this environment variable to avoid fragmentation
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:256"
+
+
 # Global constants
 learning_rate = 0.01
 batch_size = 64
@@ -86,7 +93,7 @@ input_sizes = 3*img_sizes**2 # Input dimension
 input_shapes = [(channels, img_size, img_size) for img_size in img_sizes]
 
 # Full dataset sizes
-N_tr = 1000000
+N_tr = 10000
 N_te = 10000
 
 # Get architecture name
@@ -117,18 +124,25 @@ print(f"Progress: 0 / {len(input_sizes)}")
 for i, input_size in enumerate(input_sizes):
     
     # Full training and test sets
-    gauss_x_tr = torch.tensor(np.random.normal(0,1,size=(N_tr,*(input_shapes[i]))),dtype=torch.float32, device=device)
-    gauss_x_te = torch.tensor(np.random.normal(0,1,size=(N_te,*(input_shapes[i]))),dtype=torch.float32, device=device)
+    gauss_x_tr = torch.tensor(np.random.normal(0,1,size=(N_tr,*(input_shapes[i]))),dtype=torch.float32)
+    gauss_x_te = torch.tensor(np.random.normal(0,1,size=(N_te,*(input_shapes[i]))),dtype=torch.float32)
 
     # Full h2 training and test labels
     p_norm = option_dict.get('-p') or 2
-    gauss_y_tr = calc_label(gauss_x_tr, p=p_norm).to(device)
-    gauss_y_te = calc_label(gauss_x_te, p=p_norm).to(device)
+    gauss_y_tr = calc_label(gauss_x_tr, p=p_norm)
+    gauss_y_te = calc_label(gauss_x_te, p=p_norm)
+    
+    # print('After pushing data to GPU: ', torch.cuda.memory_stats(device)['allocated_bytes.all.current'])
+  
     
     # Models
     model_options = {'input_shape': input_shapes[i], 'proportion': proportion}
     model = loader.load(architecture, activation, model_options).to(device)
-
+    
+    # Print number of parameters
+    print("The model has", count_parameters(model), "parameters")
+    print("Memory usage after creating model",torch.cuda.memory_stats(device)['allocated_bytes.all.current'])
+    
     # Save initial model state
     torch.save(model.state_dict(), 'weights/'+arch_name+'.pth')
     
@@ -145,7 +159,7 @@ for i, input_size in enumerate(input_sizes):
         model.load_state_dict(torch.load('weights/'+arch_name+'.pth'))
         
         # Train model
-        _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:n_curr], gauss_y_tr[:n_curr], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te)
+        _, accuracy = train_model(model, batch_size, learning_rate, gauss_x_tr[:n_curr], gauss_y_tr[:n_curr], gauss_x_te, gauss_y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te, device)
         found = abs(accuracy - epsilon) < tolerance
                 
         print("Finished training. Acc: ", accuracy, "n =", n_curr)

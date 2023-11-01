@@ -64,6 +64,9 @@ def numel(shape, transforms):
         
     return torch.numel(y)
 
+def count_parameters(model): 
+    return sum(p.numel() for p in model.parameters() if p.requires_grad) 
+
 
 def printProgressBar(iteration, total, prefix = '', suffix = '', decimals = 1, length = 100):
     """
@@ -92,7 +95,7 @@ def strToBool(string):
     """
     return True if string=="True" else False if string=="False" else False
 
-def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te, do_print=True):
+def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_conv_crit, abs_conv_crit, max_epochs, window, N_te, device, do_print=True):
     """
     Performs a training routine on a model with SGD, BCELoss, until 
     the relative or absolute convergence criteria are met or until
@@ -101,8 +104,11 @@ def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_co
         (TODO)
     """
     # Create dataloaders
-    dataset = TensorDataset(x_tr, y_tr)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    tr_dataset = TensorDataset(x_tr, y_tr)
+    tr_loader = DataLoader(tr_dataset, batch_size=batch_size, shuffle=True)
+    
+    te_dataset = TensorDataset(x_te, y_te)
+    te_loader = DataLoader(te_dataset, batch_size=batch_size, shuffle=True)
     
     # Optimizer and criterion
     optimizer = optim.SGD(model.parameters(), lr=learning_rate)
@@ -114,30 +120,36 @@ def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_co
     converged = False
     queue = []
     while not converged:
-        for batch_x, batch_y in dataloader:
+        for batch_x, batch_y in tr_loader:
+            batch_x, batch_y = batch_x.to(device), batch_y.to(device)
             optimizer.zero_grad()
             output = model(batch_x)
-            loss = criterion(output, batch_y)
-            loss.backward()
+            tr_loss = criterion(output, batch_y)
+            tr_loss.backward()
             optimizer.step()
 
             # Is it converged?
-            roll_avg = roll_avg_rel_change(queue, window, loss.item())
-            if (roll_avg and roll_avg < rel_conv_crit and loss < abs_conv_crit) or epoch == max_epochs:
+            roll_avg = roll_avg_rel_change(queue, window, tr_loss.item())
+            if (roll_avg and roll_avg < rel_conv_crit and tr_loss < abs_conv_crit) or epoch == max_epochs:
                 converged = True
                 break
 
         epoch += 1
-        if epoch % 10 == 0 % do_print:
-            print("Epoch:", epoch, "\tRolling Average Loss:", roll_avg, "\tLoss:", loss.item())
+        if epoch % 50 == 0 % do_print:
+            print("Epoch:", epoch, "\tRolling Average Loss:", roll_avg, "\tLoss:", tr_loss.item())
     
     # Evaluate models
-    test_loss = 0
+    te_loss = 0
     accuracy = 0
     with torch.no_grad():
         model.eval()
-        out = model(x_te)
-        test_loss += criterion(out, y_te)
-        accuracy += float(sum(torch.eq((out>0.5).to(float),y_te))/N_te)
+        
+        # Batch to lower GPU memory usage
+        for batch_x, batch_y in te_loader:
+            batch_x, batch_y = batch_x.to(device), batch_y.to(device)
+            
+            output = model(batch_x)
+            te_loss += criterion(output, batch_y)
+            accuracy += sum(torch.eq((output>0.5).to(float), batch_y))
     
-    return test_loss, accuracy
+    return te_loss, float(accuracy / N_te)
