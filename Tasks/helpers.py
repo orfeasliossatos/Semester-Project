@@ -4,6 +4,41 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 
+def read_options(valid, args):
+    """
+        Takes a map of valid types {'-name' : type} and the program arguments,
+        and tries to convert the program arguments to the corresponding
+        option types, returning a dictionary of parameters {'-name' : value}.
+
+        If the conversion fails, returns a ValueError.
+    """
+    # Zip up the arguments into subsequent pairs of two
+    arg_pairs=zip(args[::2],args[1::2])
+    
+    # The dictionary of parameters to return
+    option_dict = {}
+    option_dict.setdefault(None)
+
+    # Try convert the parameters.
+    try:
+        if len(args) % 2 != 0:
+            print("Invalid arguments. Must be an even number of values.")
+            exit()
+
+        for i, (arg, val) in enumerate(arg_pairs):
+        
+            if arg not in valid.keys():
+                raise ValueError("Option unavailable:", arg) 
+        
+            else:
+                # Try convert to type
+                option_dict[arg]=valid[arg](val)
+         
+    except ValueError:
+        print(ValueError)
+
+    return option_dict
+
 def roll_avg_rel_change(queue, window, new):
     """
         Computes the rolling average of relative changes
