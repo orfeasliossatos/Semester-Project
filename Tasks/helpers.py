@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import torch.nn as nn
 import torch.optim as optim
+from itertools import product
 from torch.utils.data import TensorDataset, DataLoader
 
 def read_options(valid, args):
@@ -65,6 +66,36 @@ def roll_avg_rel_change(queue, window, new):
         # Return average of relative changes
         return np.mean(abs((nqueue[1:] - nqueue[:-1]) / nqueue[:-1]))
 
+def gen_pattern_xy(width, channels, number, max_freq, clamp):
+
+    # Choose a number of frequencies
+    freqs = np.arange(1, max_freq+1)
+    freq = np.random.choice(a=freqs, p=freqs / np.sum(freqs))
+
+    # Bernoulli labels : noise / no noise
+    sigs = np.random.choice([0, 1], size=(number, ), p=[0.5, 0.5])
+    y = np.where(sigs == 0, 0, 1)
+
+    # Blank F-domain canvases [number, channels, width, height]
+    blank = np.zeros(width * width)
+    f_dom = blank.reshape((1,len(blank))).repeat(number, axis=0).reshape((number, channels, width, width))
+
+    # Select random pixels in low frequency box
+    span = np.arange(-clamp//2, clamp//2+1)         # Index [-clamp, clamp] along one dimension
+    w, h = list(zip(*list(product(span, span))))    # The pairs of indices in two dimensions unzipped
+    subarray = f_dom[..., w, h]                     
+    subarray[..., :freq] = 1                        # Set some capped number of pixels to 1 in the box
+    permute_along_axes(subarray, [2])               # Randomize the position of those pixels 
+    f_dom[..., w, h] = subarray                     # Assign the original image with those pixels
+
+    # Perform the 2D inverse Fourier transform
+    x_dom = np.array([min_max_rescale(img, -1, 1) for img in np.abs(np.fft.ifft2(f_dom))])
+
+    # Add noise depending on the label
+    x_dom = np.array([x_dom[j] + np.random.normal(0, sigs[j], size=(channels, width, width)) for j in range(number)])
+
+    return torch.from_numpy(x_dom).to(torch.float32), torch.from_numpy(y.reshape((-1,1))).to(torch.float32)
+
 def calc_label(x, p):
     """
         Computes canonical label over input tensor x that indicates
@@ -101,6 +132,23 @@ def numel(shape, transforms):
 
 def count_parameters(model): 
     return sum(p.numel() for p in model.parameters() if p.requires_grad) 
+
+def min_max_rescale(arr, a, b):
+    """
+        Returns a min-max rescaled array so that its values are between a and b.
+    """
+    if (len(set(arr.flatten()))==1):
+        return arr
+    else:
+        return a + ((b - a) * (arr - np.min(arr))) / (np.max(arr) - np.min(arr))
+
+def permute_along_axes(arr, axes):
+    """
+        Takes a numpy array and permutes its values along the specified axes.
+    """
+    rng = np.random.default_rng()
+    for ax in axes:
+        rng.permuted(arr, axis=ax, out=arr)
 
 
 def printProgressBar(iteration, total, prefix = '', suffix = '', decimals = 1, length = 100):
