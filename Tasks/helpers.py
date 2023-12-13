@@ -133,6 +133,12 @@ def numel(shape, transforms):
 def count_parameters(model): 
     return sum(p.numel() for p in model.parameters() if p.requires_grad) 
 
+def standardize(arr):
+    """
+        Returns a standardized array.
+    """
+    return (arr - arr.mean()) / np.maximum(arr.std(), 1e-8)
+
 def min_max_rescale(arr, a, b):
     """
         Returns a min-max rescaled array so that its values are between a and b.

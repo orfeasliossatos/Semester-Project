@@ -7,8 +7,7 @@ from helpers import numel
 class CNN(nn.Module):
     def __init__(self, activation, model_options):
         super(CNN, self).__init__()
-        
-        self.conv = nn.Conv2d(1, 100, kernel_size=3, stride=1, padding=1)
+        self.conv = nn.Conv2d(1, model_options.get('out_channels') or 100, kernel_size=3, padding=1, stride=1)
         self.activation = activation
         self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.fc = nn.Linear(numel(model_options.get('input_shape'), [self.conv,self.pool]), 1)
@@ -49,9 +48,9 @@ class FCNN(nn.Module):
         super(FCNN, self).__init__()
         
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(prod(model_options.get('input_shape')),3072)
+        self.fc1 = nn.Linear(prod(model_options.get('input_shape')), model_options.get('hidden_neurons') or 3072)
         self.activation = activation
-        self.fc2 = nn.Linear(3072, 1)
+        self.fc2 = nn.Linear(model_options.get('hidden_neurons') or 3072, 1)
         self.sigmoid = nn.Sigmoid()
         
         
