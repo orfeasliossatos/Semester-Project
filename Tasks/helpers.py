@@ -66,50 +66,6 @@ def roll_avg_rel_change(queue, window, new):
         # Return average of relative changes
         return np.mean(abs((nqueue[1:] - nqueue[:-1]) / nqueue[:-1]))
 
-def gen_pattern_xy(width, channels, number, max_freq, clamp):
-
-    # Choose a number of frequencies
-    freqs = np.arange(1, max_freq+1)
-    freq = np.random.choice(a=freqs, p=freqs / np.sum(freqs))
-
-    # Bernoulli labels : noise / no noise
-    sigs = np.random.choice([0, 1], size=(number, ), p=[0.5, 0.5])
-    y = np.where(sigs == 0, 0, 1)
-
-    # Blank F-domain canvases [number, channels, width, height]
-    blank = np.zeros(width * width)
-    f_dom = blank.reshape((1,len(blank))).repeat(number, axis=0).reshape((number, channels, width, width))
-
-    # Select random pixels in low frequency box
-    span = np.arange(-clamp//2, clamp//2+1)         # Index [-clamp, clamp] along one dimension
-    w, h = list(zip(*list(product(span, span))))    # The pairs of indices in two dimensions unzipped
-    subarray = f_dom[..., w, h]                     
-    subarray[..., :freq] = 1                        # Set some capped number of pixels to 1 in the box
-    permute_along_axes(subarray, [2])               # Randomize the position of those pixels 
-    f_dom[..., w, h] = subarray                     # Assign the original image with those pixels
-
-    # Perform the 2D inverse Fourier transform
-    x_dom = np.array([min_max_rescale(img, -1, 1) for img in np.abs(np.fft.ifft2(f_dom))])
-
-    # Add noise depending on the label
-    x_dom = np.array([x_dom[j] + np.random.normal(0, sigs[j], size=(channels, width, width)) for j in range(number)])
-
-    return torch.from_numpy(x_dom).to(torch.float32), torch.from_numpy(y.reshape((-1,1))).to(torch.float32)
-
-def calc_label(x, p):
-    """
-        Computes canonical label over input tensor x that indicates
-        whether the p-norm of the Red channel is larger than the Green one.
-        
-        Parameters:
-            x: tensor of shape (N, 3, k, k) 
-            p: the norm
-        Returns:
-            y: the label tensor of shape (N, 1)
-    """
-    cumul_x = torch.sum(x**p, dim=(2,3))
-    y = (cumul_x.T[0] > cumul_x.T[1]).to(torch.float32)
-    return y.view(y.size(0),1)
 
 def numel(shape, transforms):
     """
@@ -242,3 +198,21 @@ def train_model(model, batch_size, learning_rate, x_tr, y_tr, x_te, y_te, rel_co
             accuracy += sum(torch.eq((output>0.5).to(float), batch_y))
     
     return te_loss, float(accuracy / N_te)
+
+
+def unpack_and_aggregate(results, model_name, ops):
+    
+    # Unzipped lists
+    xs, ys = list(zip(*sorted([(int(dim), tr_size) for (_name, dim), tr_size  in results.items() if model_name == _name])))
+
+    # Format lists for scattering
+    xs_rep = []
+    for i, y in enumerate(ys):
+        xs_rep = np.concatenate([xs_rep, np.repeat(xs[i], len(y))])
+
+    ys_flat = np.array(ys).flatten()
+
+    # Operations
+    results = [[op(y) for y in ys] for op in ops]
+
+    return xs_rep, ys_flat, *tuple(results)
